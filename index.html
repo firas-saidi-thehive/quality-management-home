@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quality Management — Home</title>
+<style>
+  :root{
+    --hive-blue:#0B3D5C;
+    --hive-teal:#0F7A78;
+    --hive-gold:#E3A93A;
+    --bg-light:#F5F7F9;
+    --text-dark:#1B2B34;
+    --text-muted:#5A6B75;
+    --white:#ffffff;
+    --radius:10px;
+    --shadow:0 2px 10px rgba(0,0,0,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+    color:var(--text-dark);
+    background:var(--bg-light);
+    line-height:1.5;
+  }
+  .qm-wrapper{max-width:1200px;margin:0 auto;padding:0 20px;}
+  a{text-decoration:none;color:inherit;}
+
+  /* HERO */
+  .qm-hero{
+    background:linear-gradient(135deg, var(--hive-blue) 0%, var(--hive-teal) 100%);
+    color:var(--white);
+    padding:60px 0 50px;
+  }
+  .qm-hero-inner{max-width:1200px;margin:0 auto;padding:0 20px;text-align:center;}
+  .qm-hero h1{font-size:2.4rem;margin:0 0 8px;font-weight:700;}
+  .qm-hero .tagline{font-size:1.1rem;font-weight:500;color:var(--hive-gold);margin:0 0 16px;}
+  .qm-hero p.desc{max-width:700px;margin:0 auto 26px;color:rgba(255,255,255,0.9);font-size:1rem;}
+  .qm-btn{
+    display:inline-block;
+    background:var(--hive-gold);
+    color:var(--hive-blue);
+    padding:12px 26px;
+    border-radius:6px;
+    font-weight:600;
+    font-size:0.95rem;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .qm-btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,0.2);}
+  .qm-btn.secondary{background:var(--white);color:var(--hive-blue);}
+
+  .qm-hero-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+    margin-top:36px;
+  }
+  .qm-hero-card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:var(--radius);
+    padding:24px;
+    text-align:left;
+  }
+  .qm-hero-card h3{margin:0 0 8px;font-size:1.1rem;}
+  .qm-hero-card p{margin:0 0 16px;font-size:0.92rem;color:rgba(255,255,255,0.85);}
+
+  /* SECTION GENERIC */
+  section{padding:50px 0;}
+  .qm-section-title{
+    font-size:0.85rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--hive-teal);
+    font-weight:700;
+    margin:0 0 6px;
+    text-align:center;
+  }
+  .qm-section-heading{
+    font-size:1.8rem;
+    font-weight:700;
+    text-align:center;
+    margin:0 0 12px;
+    color:var(--hive-blue);
+  }
+  .qm-section-desc{
+    text-align:center;
+    max-width:760px;
+    margin:0 auto 36px;
+    color:var(--text-muted);
+  }
+
+  /* FAQ */
+  .qm-faq-list{max-width:820px;margin:0 auto;}
+  details{
+    background:var(--white);
+    border:1px solid #E2E8ED;
+    border-radius:var(--radius);
+    margin-bottom:12px;
+    padding:16px 20px;
+    box-shadow:var(--shadow);
+  }
+  details summary{
+    font-weight:600;
+    cursor:pointer;
+    font-size:1rem;
+    color:var(--hive-blue);
+    list-style:none;
+    position:relative;
+    padding-right:24px;
+  }
+  details summary::-webkit-details-marker{display:none;}
+  details summary::after{
+    content:"+";
+    position:absolute;
+    right:0;top:0;
+    font-size:1.3rem;
+    color:var(--hive-teal);
+    transition:transform .2s ease;
+  }
+  details[open] summary::after{content:"–";}
+  details p{margin:12px 0 0;color:var(--text-muted);font-size:0.95rem;}
+  .qm-more-link{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:var(--hive-teal);
+    font-weight:600;
+  }
+  .qm-more-link:hover{text-decoration:underline;}
+
+  /* GRID CARDS (updates, team, resources) */
+  .qm-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
+  }
+  .qm-card{
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:24px;
+    box-shadow:var(--shadow);
+    border-top:4px solid var(--hive-teal);
+  }
+  .qm-card h3{margin:0 0 8px;font-size:1.05rem;color:var(--hive-blue);}
+  .qm-card p{margin:0 0 16px;color:var(--text-muted);font-size:0.92rem;}
+  .qm-card .qm-btn{padding:9px 18px;font-size:0.85rem;}
+
+  .qm-updates-placeholder{
+    background:var(--white);
+    border:2px dashed #C9D6DE;
+    border-radius:var(--radius);
+    padding:24px;
+    color:var(--text-muted);
+    font-size:0.92rem;
+  }
+  .qm-updates-placeholder ul{margin:10px 0 0;padding-left:20px;}
+  .qm-updates-placeholder li{margin-bottom:6px;}
+
+  .qm-events-placeholder{
+    background:var(--white);
+    border:2px dashed #C9D6DE;
+    border-radius:var(--radius);
+    padding:24px;
+    color:var(--text-muted);
+    font-size:0.92rem;
+    max-width:820px;
+    margin:0 auto;
+  }
+  .qm-events-placeholder ul{
+    columns:2;
+    margin:10px 0 0;
+    padding-left:20px;
+  }
+  .qm-events-placeholder li{margin-bottom:6px;}
+
+  /* TEAM */
+  .qm-team-card{border-top-color:var(--hive-gold);}
+
+  /* CONTINUOUS IMPROVEMENT */
+  .qm-ci{background:var(--white);}
+  .qm-ci-cycle{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:0 auto 36px;
+    font-weight:700;
+    color:var(--hive-blue);
+    font-size:1.1rem;
+  }
+  .qm-ci-cycle span.arrow{color:var(--hive-gold);font-size:1.3rem;}
+  .qm-ci-steps{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
+  }
+  .qm-ci-step{
+    text-align:center;
+    padding:20px 14px;
+    background:var(--bg-light);
+    border-radius:var(--radius);
+  }
+  .qm-ci-step .num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:36px;height:36px;
+    border-radius:50%;
+    background:var(--hive-teal);
+    color:var(--white);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .qm-ci-step h4{margin:0 0 6px;font-size:0.98rem;color:var(--hive-blue);}
+  .qm-ci-step p{margin:0;font-size:0.85rem;color:var(--text-muted);}
+
+  /* QMS EXPLORE BANNER */
+  .qm-explore{
+    background:var(--hive-blue);
+    color:var(--white);
+    text-align:center;
+    padding:60px 0;
+  }
+  .qm-explore h2{font-size:1.8rem;margin:0 0 14px;}
+  .qm-explore p{max-width:800px;margin:0 auto 26px;color:rgba(255,255,255,0.88);}
+
+  .qm-manage-heading{margin-bottom:36px;}
+
+  @media (max-width:600px){
+    .qm-hero h1{font-size:1.8rem;}
+    .qm-section-heading{font-size:1.5rem;}
+    .qm-events-placeholder ul{columns:1;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="qm-hero">
+  <div class="qm-hero-inner">
+    <h1>Quality at The Hive</h1>
+    <p class="tagline">Build it right. Measure it. Improve it.</p>
+    <p class="desc">Access The Hive's Quality Management System, approved standards, performance controls, improvement processes, and quality resources.</p>
+    <a href="#" class="qm-btn">Explore the Quality Management System</a>
+
+    <div class="qm-hero-cards">
+      <div class="qm-hero-card">
+        <h3>Quality Policy &amp; Objectives</h3>
+        <p>Understand The Hive's quality commitments, strategic objectives, and the principles that guide how we design, deliver, monitor, and improve our services.</p>
+        <a href="#" class="qm-btn secondary">View Quality Policy</a>
+      </div>
+      <div class="qm-hero-card">
+        <h3>Report an Issue or Improvement</h3>
+        <p>Identify a non-conformity, recurring issue, process weakness, client concern, or opportunity for improvement.</p>
+        <a href="#" class="qm-btn secondary">Submit Quality Issue</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section>
+  <div class="qm-wrapper">
+    <p class="qm-section-title">Quality FAQs</p>
+    <h2 class="qm-section-heading">Frequently Asked Questions</h2>
+    <div class="qm-faq-list">
+      <details open>
+        <summary>What is The Hive Quality Management System?</summary>
+        <p>The QMS defines how The Hive manages processes, responsibilities, controls, performance, risks, corrective actions, and continuous improvement.</p>
+      </details>
+      <details>
+        <summary>Where can I find approved policies and procedures?</summary>
+        <p>All approved quality policies, procedures, standards, templates, and records are available within the Quality Management Resources library.</p>
+      </details>
+      <details>
+        <summary>How do I report a non-conformity?</summary>
+        <p>Use the Report Quality Issue form to register the issue. It will then be assessed, assigned, investigated, and tracked through resolution.</p>
+      </details>
+      <details>
+        <summary>What is a CAPA?</summary>
+        <p>A Corrective and Preventive Action addresses the root cause of an identified issue and helps prevent recurrence or similar future problems.</p>
+      </details>
+      <details>
+        <summary>Who is responsible for process quality?</summary>
+        <p>Each controlled process has a designated Process Owner responsible for its performance, documentation, controls, risks, and improvement.</p>
+      </details>
+      <a href="#" class="qm-more-link">See more Quality FAQs →</a>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY UPDATES -->
+<section style="background:var(--white);">
+  <div class="qm-wrapper">
+    <p class="qm-section-title">Quality Updates &amp; Controlled Documents</p>
+    <h2 class="qm-section-heading">Latest Quality Updates</h2>
+    <p class="qm-section-desc">Stay informed about newly published or revised policies, procedures, standards, audit findings, quality initiatives, and important QMS changes.</p>
+    <div class="qm-updates-placeholder">
+      <em>Replace this block with the SharePoint "News" web part.</em> Suggested posts:
+      <ul>
+        <li>New Quality Policy Published</li>
+        <li>Updated Incident Management Procedure</li>
+        <li>Q3 Internal Audit Schedule Released</li>
+        <li>New CAPA Process Introduced</li>
+        <li>Process Documentation Review Required</li>
+        <li>Management Review Outcomes</li>
+        <li>New Quality KPI Dashboard Available</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section>
+  <div class="qm-wrapper">
+    <p class="qm-section-title">Quality Management Team</p>
+    <h2 class="qm-section-heading">Quality Owners &amp; Support</h2>
+    <p class="qm-section-desc">Connect with the people responsible for maintaining, monitoring, and improving The Hive Quality Management System.</p>
+    <div class="qm-grid">
+      <div class="qm-card qm-team-card">
+        <h3>Quality Management Owner</h3>
+        <p>Oversees the QMS, quality framework, governance, performance monitoring, and continuous improvement.</p>
+      </div>
+      <div class="qm-card qm-team-card">
+        <h3>Process Owners</h3>
+        <p>Responsible for the effectiveness, documentation, controls, KPIs, risks, and improvement of assigned business processes.</p>
+      </div>
+      <div class="qm-card qm-team-card">
+        <h3>Internal Audit Coordinator</h3>
+        <p>Coordinates internal audits, findings, evidence collection, follow-up activities, and audit reporting.</p>
+      </div>
+      <div class="qm-card qm-team-card">
+        <h3>CAPA &amp; Continuous Improvement</h3>
+        <p>Supports root-cause analysis, corrective actions, preventive actions, lessons learned, and improvement initiatives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESSENTIAL RESOURCES -->
+<section style="background:var(--white);">
+  <div class="qm-wrapper">
+    <p class="qm-section-title">Essential Resources</p>
+    <h2 class="qm-section-heading">Essential Quality Resources</h2>
+    <div class="qm-grid">
+      <div class="qm-card">
+        <h3>Quality Policy</h3>
+        <p>Access The Hive's overarching quality commitments and principles.</p>
+      </div>
+      <div class="qm-card">
+        <h3>Process &amp; Procedure Library</h3>
+        <p>Access approved processes, procedures, standards, and operating documentation.</p>
+      </div>
+      <div class="qm-card">
+        <h3>Report a Non-Conformity</h3>
+        <p>Register a process failure, quality issue, control weakness, or deviation.</p>
+      </div>
+      <div class="qm-card">
+        <h3>CAPA Register</h3>
+        <p>Review and track corrective and preventive actions.</p>
+      </div>
+      <div class="qm-card">
+        <h3>Quality KPI Dashboard</h3>
+        <p>Monitor quality objectives, process performance, trends, and improvement indicators.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UPCOMING ACTIVITIES -->
+<section>
+  <div class="qm-wrapper">
+    <p class="qm-section-title">Upcoming Quality Activities</p>
+    <h2 class="qm-section-heading">Upcoming Reviews &amp; Events</h2>
+    <div class="qm-events-placeholder">
+      <em>Replace this block with the existing SharePoint "Events" web part.</em> Suggested event types:
+      <ul>
+        <li>Internal Audits</li>
+        <li>Management Review Meetings</li>
+        <li>Process Reviews</li>
+        <li>CAPA Review Meetings</li>
+        <li>Quality Training</li>
+        <li>Policy Review Deadlines</li>
+        <li>KPI Review Sessions</li>
+        <li>QMS Awareness Sessions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MANAGE QUALITY ACROSS THE HIVE -->
+<section style="background:var(--white);">
+  <div class="qm-wrapper">
+    <p class="qm-section-title">Quality Management Resources</p>
+    <h2 class="qm-section-heading qm-manage-heading">Manage Quality Across The Hive</h2>
+    <div class="qm-grid">
+      <div class="qm-card">
+        <h3>Processes &amp; Process Owners</h3>
+        <p>Understand The Hive's key processes, responsibilities, dependencies, and assigned ownership.</p>
+        <a href="#" class="qm-btn">Explore Processes</a>
+      </div>
+      <div class="qm-card">
+        <h3>KPIs &amp; Performance</h3>
+        <p>Monitor quality objectives, service performance, process effectiveness, trends, and improvement indicators.</p>
+        <a href="#" class="qm-btn">View Quality Performance</a>
+      </div>
+      <div class="qm-card">
+        <h3>Internal Audits</h3>
+        <p>Access the audit programme, schedules, audit reports, findings, evidence, and follow-up actions.</p>
+        <a href="#" class="qm-btn">Open Audit Center</a>
+      </div>
+      <div class="qm-card">
+        <h3>Risks &amp; Opportunities</h3>
+        <p>Identify, assess, monitor, and address risks and improvement opportunities affecting process and service quality.</p>
+        <a href="#" class="qm-btn">View Risks &amp; Opportunities</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTINUOUS IMPROVEMENT -->
+<section class="qm-ci">
+  <div class="qm-wrapper">
+    <p class="qm-section-title">Continuous Improvement</p>
+    <h2 class="qm-section-heading">Turning Evidence Into Improvement</h2>
+    <p class="qm-section-desc">Quality management at The Hive is not limited to documenting processes. We continuously evaluate how our services and operations perform, identify weaknesses and opportunities, understand root causes, implement corrective actions, and measure whether improvements are effective.</p>
+
+    <div class="qm-ci-cycle">
+      <span>Plan</span><span class="arrow">→</span><span>Do</span><span class="arrow">→</span><span>Check</span><span class="arrow">→</span><span>Improve</span>
+    </div>
+
+    <div class="qm-ci-steps">
+      <div class="qm-ci-step">
+        <div class="num">1</div>
+        <h4>Report an issue</h4>
+        <p>Identify a deviation, weakness, recurring problem, client concern, or improvement opportunity.</p>
+      </div>
+      <div class="qm-ci-step">
+        <div class="num">2</div>
+        <h4>Analyze</h4>
+        <p>Determine impact, contributing factors, and root cause.</p>
+      </div>
+      <div class="qm-ci-step">
+        <div class="num">3</div>
+        <h4>Correct</h4>
+        <p>Define and implement appropriate corrective or preventive actions.</p>
+      </div>
+      <div class="qm-ci-step">
+        <div class="num">4</div>
+        <h4>Verify</h4>
+        <p>Confirm that actions were completed and produced the expected result.</p>
+      </div>
+      <div class="qm-ci-step">
+        <div class="num">5</div>
+        <h4>Improve</h4>
+        <p>Apply lessons learned across relevant processes and teams.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE QMS -->
+<section class="qm-explore">
+  <div class="qm-wrapper">
+    <p class="qm-section-title" style="color:var(--hive-gold);">Quality Management System</p>
+    <h2>Explore The Hive Quality Management System</h2>
+    <p>The Hive QMS connects our policies, processes, controls, people, performance indicators, risks, audits, corrective actions, and improvement initiatives into one controlled management framework. It enables us to deliver services consistently, measure what matters, identify problems early, retain evidence, and continuously improve how the organization operates.</p>
+    <a href="#" class="qm-btn">Explore the QMS</a>
+  </div>
+</section>
+
+</body>
+</html>
